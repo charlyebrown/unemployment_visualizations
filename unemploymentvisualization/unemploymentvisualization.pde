@@ -93,7 +93,7 @@ public void draw() {
  draw title
  */
 void setTitle(String title, Float x, Float y) {
-  textSize(20);
+  textSize(15);
   fill(0, 0, 0);
   text(title, x, y);
 }

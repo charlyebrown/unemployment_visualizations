@@ -25,7 +25,7 @@ class VisualizationThree implements Visualization
     bottomRightY = height - 70;
 
     //println("VisualizationThree - Constructor");
-    tab = new FloatTable("..\\data\\france.tsv");
+    tab = new FloatTable("france.tsv");
     rowCount = tab.rowCount;
     minRate = tab.getColumnMin(0);
     maxRate = tab.getColumnMax(0);
@@ -56,9 +56,9 @@ class VisualizationThree implements Visualization
     // Draw the title of the current plot.
     fill(0);
     textSize(20);
-    String title = "Un-Employment Rate in France";
-    setTitle(title, Float.valueOf(topLeftX), Float.valueOf(topLeftY - 10));
-    stroke(86, 121, 193);
+    String title = "Unmployment Rate in France";
+    setTitle(title, 275.0, 50.0);
+    stroke(50, 121, 193);
     strokeWeight(5);
 scale(scl);
 println("Scale:"+scl);
@@ -161,12 +161,12 @@ println("Scale:"+scl);
     int labelX = 50;
     int labelY = height - 25;
     fill(0);
-    textSize(13);
+    textSize(10);
     textLeading(15);
     textAlign(CENTER, CENTER);
     // Use \n (aka enter or linefeed) to break the text into separate
     // lines.
-    text("Un-Employment\nRate\n", labelX, (topLeftY + bottomRightY) / 2);
+    text("Unemployment\nRate\n", labelX, (topLeftY + bottomRightY) / 2);
     textAlign(CENTER);
     text("Year", (topLeftX + bottomRightX) / 2, labelY);
   }
