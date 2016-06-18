@@ -15,6 +15,7 @@ class VisualizationOne implements Visualization
   int topLeftY;
   int bottomRightY;
   Float scl=1.0F;
+  Boolean gridOn = true;
 
 
   VisualizationOne() 
@@ -39,14 +40,8 @@ class VisualizationOne implements Visualization
     smooth();
   }
   
-  
-  
-  
   public void draw() {
-    
-   // println("Third Visualization");
-    setSubTitle("Third Visualization - SubTitle");
-
+    setSubTitle("US Unemployment Rates");
     background(224);
     // Show the plot area as a white box.
     fill(255);
@@ -60,8 +55,8 @@ class VisualizationOne implements Visualization
     setTitle(title, 275.0, 50.0);
     stroke(50, 121, 193);
     strokeWeight(5);
-scale(scl);
-println("Scale:"+scl);
+    scale(scl);
+    println("Scale:"+scl);
     drawDataPoints(0);
     drawYearLabels();
     drawVolumeLabels();
@@ -82,11 +77,11 @@ println("Scale:"+scl);
           textSize(10);
           textAlign(CENTER);
           text(nf(value, 0, 2) + " (" + this.quarters[row] + ")", x, y - 8);
-          
-            stroke(239,21,16);
-            strokeWeight(1);
-           line(x, y, topLeftX, y );
-           line(x, y, x, bottomRightY );
+        
+          stroke(239,21,16);
+          strokeWeight(1);
+          line(x, y, topLeftX, y );
+          line(x, y, x, bottomRightY );
           
         }
       }
@@ -122,7 +117,9 @@ println("Scale:"+scl);
         float x = map(row, 0, rowCount, topLeftX, bottomRightX);
 
         text(quarters[row], x, bottomRightY + 10);
-        line(x, topLeftY, x, bottomRightY);
+        if(gridOn){
+          line(x, topLeftY, x, bottomRightY);
+        }
       }
     }
   }
@@ -177,12 +174,16 @@ println("Scale:"+scl);
   }
 
   public void keyReleased() {
-   // println("Key=" + key);
-  //  println("KeyCode=" + keyCode);
     if (39 == keyCode) {
       currentColumn = (currentColumn + 1) % tab.columnCount;
     } else if (37 == keyCode) {
       currentColumn = (currentColumn == 0 ? (tab.columnCount - 1) : currentColumn - 1) % tab.columnCount;
+    } else if (key == CODED){
+      if (keyCode == UP) {
+        gridOn = true;
+      } else if (keyCode == DOWN) {
+        gridOn = false;
+      }
     }
     this.draw();
   }

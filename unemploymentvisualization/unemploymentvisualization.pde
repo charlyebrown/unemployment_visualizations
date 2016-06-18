@@ -127,7 +127,8 @@ public void keyReleased() {
     screenToggleOld = screenToggle;
     screenToggle = (screenToggle + 1) % 3;
     println("screenToggle=" + screenToggle);
-  } else {
+  } 
+  else {
     currentVisualization.keyReleased();
   }
 }

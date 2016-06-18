@@ -15,6 +15,7 @@ class VisualizationThree implements Visualization
   int topLeftY;
   int bottomRightY;
   Float scl=1.0F;
+  Boolean gridOn = true;
 
 
   VisualizationThree() 
@@ -60,8 +61,8 @@ class VisualizationThree implements Visualization
     setTitle(title, 275.0, 50.0);
     stroke(50, 121, 193);
     strokeWeight(5);
-scale(scl);
-println("Scale:"+scl);
+    scale(scl);
+    println("Scale:"+scl);
     drawDataPoints(0);
     drawYearLabels();
     drawVolumeLabels();
@@ -122,7 +123,9 @@ println("Scale:"+scl);
         float x = map(row, 0, rowCount, topLeftX, bottomRightX);
 
         text(quarters[row], x, bottomRightY + 10);
-        line(x, topLeftY, x, bottomRightY);
+        if(gridOn){
+          line(x, topLeftY, x, bottomRightY);
+        }
       }
     }
   }
@@ -183,6 +186,12 @@ println("Scale:"+scl);
       currentColumn = (currentColumn + 1) % tab.columnCount;
     } else if (37 == keyCode) {
       currentColumn = (currentColumn == 0 ? (tab.columnCount - 1) : currentColumn - 1) % tab.columnCount;
+    } else if (key == CODED){
+      if (keyCode == UP) {
+        gridOn = true;
+      } else if (keyCode == DOWN) {
+        gridOn = false;
+      }
     }
     this.draw();
   }
