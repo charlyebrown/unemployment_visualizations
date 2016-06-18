@@ -45,9 +45,6 @@ class VisualizationTwo implements Visualization
   
   public void draw() {
     
-   // println("Second Visualization");
-    setSubTitle("Japan");
-
     background(224);
     // Show the plot area as a white box.
     fill(255);
@@ -59,10 +56,11 @@ class VisualizationTwo implements Visualization
     textSize(20);
     String title = "Unmployment Rate in Japan";
     setTitle(title, 275.0, 50.0);
+    setSubTitle("Japan");
     stroke(50, 121, 193);
     strokeWeight(5);
-scale(scl);
-println("Scale:"+scl);
+    scale(scl);
+    println("Scale:"+scl);
     drawDataPoints(0);
     drawYearLabels();
     drawVolumeLabels();
