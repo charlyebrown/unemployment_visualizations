@@ -1,37 +1,48 @@
 class VisualizationOne implements Visualization
 {
-
+  //declare variables
   int currentColumn = 0;
   FloatTable tab;
   Float minRate;
   Float maxRate;
+  Float minMeanRate;
+  Float maxMeanRate;
   String[] quarters;
   String startingQuart;
   String endingQuart;
   PFont plotFont;
   int rowCount;
+  int rowMeanCount;
   int topLeftX;
   int bottomRightX;
   int topLeftY;
   int bottomRightY;
   Float scl=1.0F;
   Boolean gridOn = true;
+  FloatTable mean;
 
-
+  //define the class for the first visualization
   VisualizationOne() 
   {
+    //set the dimensions for the visualization
     topLeftX = 120;
     bottomRightX = width - 80;
     topLeftY = 60;
     bottomRightY = height - 70;
 
-    //println("VisualizationThree - Constructor");
+    //Get data for United States Data
     tab = new FloatTable("unitedstates.tsv");
     rowCount = tab.rowCount;
     minRate = tab.getColumnMin(0);
     maxRate = tab.getColumnMax(0);
-    //println("Min Rate=" + maxRate);
-    // println(maxYear = tab.getColumnMax(1));
+    
+    //Get data for UMean Data
+    mean = new FloatTable("mean.tsv");
+    rowMeanCount = mean.rowCount;
+    minMeanRate = mean.getColumnMin(0);
+    maxMeanRate = mean.getColumnMax(0);
+    
+    //Get data for quarters for axis labels
     quarters = tab.getRowNames();
     startingQuart = quarters[0];
     endingQuart = quarters[quarters.length - 1];
@@ -40,14 +51,21 @@ class VisualizationOne implements Visualization
     smooth();
   }
   
+  //method to draw the visualization
   public void draw() {
+    //set the subtitle
     setSubTitle("US Unemployment Rates");
+    
     background(224);
+    
     // Show the plot area as a white box.
     fill(255);
     rectMode(CORNERS);
     noStroke();
+    
+    //draws the rectangle to the screen with the previously set dimensions
     rect(topLeftX, topLeftY, bottomRightX, bottomRightY);
+    
     // Draw the title of the current plot.
     fill(0);
     textSize(20);
@@ -57,6 +75,8 @@ class VisualizationOne implements Visualization
     strokeWeight(5);
     scale(scl);
     println("Scale:"+scl);
+    
+    //call the methods to draw the data with the axes labels and rollover information
     drawDataPoints(0);
     drawYearLabels();
     drawVolumeLabels();
@@ -64,6 +84,7 @@ class VisualizationOne implements Visualization
     drawDataHighlight(0);
   }
 
+  //method to set the configurations to show the information for the rollover
   void drawDataHighlight(int col) {
     for (int row = 0; row < rowCount; row++) {
       if (tab.isValid(row, col)) {
@@ -104,11 +125,14 @@ class VisualizationOne implements Visualization
     }
   }
 
+  //method to draw the labels and to set the grid
   void drawYearLabels() {
+    //set the intervals at which to draw an x-axis label
     int yearInterval = 4;
     fill(0);
     textSize(10);
     textAlign(CENTER, TOP);
+    
     // Use thin, gray lines to draw the grid.
     stroke(224);
     strokeWeight(1);
@@ -117,6 +141,8 @@ class VisualizationOne implements Visualization
         float x = map(row, 0, rowCount, topLeftX, bottomRightX);
 
         text(quarters[row], x, bottomRightY + 10);
+        
+        //check to see if the grid should be on or off
         if(gridOn){
           line(x, topLeftY, x, bottomRightY);
         }
@@ -154,6 +180,7 @@ class VisualizationOne implements Visualization
     }
   }
 
+  //draw the labels
   void drawAxisLabels() {
     int labelX = 50;
     int labelY = height - 25;
@@ -172,7 +199,8 @@ class VisualizationOne implements Visualization
     public void mouseMoved() {
     this.draw();
   }
-
+  
+  //method to toggle the gridOn and off as well as to increment the column for drawing the data
   public void keyReleased() {
     if (39 == keyCode) {
       currentColumn = (currentColumn + 1) % tab.columnCount;
@@ -188,22 +216,6 @@ class VisualizationOne implements Visualization
     this.draw();
   }
   
-  public void mouseWheel(MouseEvent event) {
-  //float e = event.getCount();
-  //println("Mouse Wheel:"+e+"|Scroll value:"+scl);
-  //if (-1==e)
-  //{
-  //  scl=scl-.01;
-  //}
-  //else
-  //{
-  //  scl=scl+.01;
-  //}
-    
- 
-  //this.draw();
-  
+
 }
   
-  
-}

@@ -145,8 +145,3 @@ public void mouseMoved() {
   println(mouseX, mouseY);
   currentVisualization.mouseMoved();
 }
-
-
-void mouseWheel(MouseEvent event) {
-  currentVisualization.mouseWheel(event);
-}
